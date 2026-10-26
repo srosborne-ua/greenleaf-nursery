@@ -1,0 +1,7 @@
+mysql-data/
+mysql.sock*
+mysql.pid
+mysql*.log
+node_modules/
+.env
+server.log

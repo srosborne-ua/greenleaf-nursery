@@ -1,0 +1,8 @@
+2026-10-26T21:36:00.982874Z 0 [System] [MY-015017] [Server] MySQL Server Initialization - start.
+2026-10-26T21:36:00.990215Z 0 [System] [MY-013169] [Server] /opt/homebrew/Cellar/mysql/26.7.0_2/bin/mysqld (mysqld 26.7.0) initializing of server in progress as process 64253
+2026-10-26T21:36:00.998494Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /Users/sageosborne/Project/.mysql-data/ is case insensitive
+2026-10-26T21:36:01.012520Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-26T21:36:01.097271Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-26T21:36:01.657070Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2026-10-26T21:36:02.203945Z 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 26.7.0).
+2026-10-26T21:36:02.498547Z 0 [System] [MY-015018] [Server] MySQL Server Initialization - end.

@@ -1,0 +1,45 @@
+2026-10-26T21:36:31.379368Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2026-10-26T21:36:31.561810Z 0 [System] [MY-010116] [Server] /opt/homebrew/Cellar/mysql/26.7.0_2/bin/mysqld (mysqld 26.7.0) starting as process 64313
+2026-10-26T21:36:31.561823Z 0 [System] [MY-015603] [Server] MySQL Server has access to 8 logical CPUs.
+2026-10-26T21:36:31.561834Z 0 [System] [MY-015603] [Server] MySQL Server has access to 8589934592 bytes of physical memory.
+2026-10-26T21:36:31.568228Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /Users/sageosborne/Project/.mysql-data/ is case insensitive
+2026-10-26T21:36:31.586185Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-26T21:36:31.628927Z 1 [ERROR] [MY-013183] [InnoDB] Assertion failure: fil0innodb_pages_persistence.cc:251:!tablespace_ids.empty() thread 0x16b39b000
+InnoDB: We intentionally generate a memory trap.
+InnoDB: Submit a detailed bug report to http://bugs.mysql.com.
+InnoDB: If you get repeated assertion failures or crashes, even
+InnoDB: immediately after the mysqld startup, there may be
+InnoDB: corruption in the InnoDB tablespace. Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/26.7/en/forcing-innodb-recovery.html
+InnoDB: about forcing recovery.
+2026-10-26T21:36:31Z UTC - mysqld got signal 6 ;
+Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware.
+Thread pointer: 0xbcf198000
+Attempting backtrace. You can use the following information to find out
+where mysqld died. If you see no messages after this, something went
+terribly wrong...
+stack_bottom = 16b39ae78 thread_stack 0x100000
+0   mysqld                              0x000000010592ec60 my_print_stacktrace(unsigned char const*, unsigned long) + 68
+1   mysqld                              0x0000000105124a8c print_fatal_signal(int, __siginfo*) + 904
+2   mysqld                              0x0000000105124c18 my_server_abort() + 92
+3   mysqld                              0x0000000105f49a84 my_abort() + 20
+4   mysqld                              0x0000000105c00358 _GLOBAL__sub_I_ut0dbg.cc + 0
+5   mysqld                              0x0000000105c002e8 ut_dbg_assertion_failed(char const*, char const*, unsigned long long) + 368
+6   mysqld                              0x0000000105a51ebc ib::fil::Pages_persistence::recover_pages(unsigned long long&) + 1076
+7   mysqld                              0x0000000105bcb290 srv_start(bool) + 2588
+8   mysqld                              0x0000000105ab1028 innobase_ddse_dict_init(dict_init_mode_t, unsigned int, List<dd::Object_table const>*, List<Plugin_tablespace const>*) + 728
+9   mysqld                              0x0000000105815814 dd::bootstrap::DDSE_dict_init(THD*, dict_init_mode_t, unsigned int) + 160
+10  mysqld                              0x000000010581b67c dd::bootstrap::restart_dictionary(THD*) + 96
+11  mysqld                              0x0000000104caafb4 bootstrap::handle_bootstrap(void*) + 236
+12  mysqld                              0x0000000105dfaf80 pfs_spawn_thread(void*) + 300
+13  libsystem_pthread.dylib             0x000000018e6b3c58 _pthread_start + 136
+14  libsystem_pthread.dylib             0x000000018e6aec1c thread_start + 8
+
+Trying to get some variables.
+Some pointers may be invalid and cause the dump to abort.
+Query (0): 
+Connection ID (thread ID): 1
+Status: NOT_KILLED
+
+The manual page at https://dev.mysql.com/doc/mysql/en/crashing.html contains
+information that should help you find out what is causing the crash.

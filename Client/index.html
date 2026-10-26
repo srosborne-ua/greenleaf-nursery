@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenLeaf Nursery</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="Resources/styles/index.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="leaf" aria-hidden="true">&#127807;</span> GreenLeaf <small>Nursery &amp; Garden Supply</small></div>
+    <label class="role-switch" title="Demo only: hides screens the role would not use (no login in this project)">
+      Viewing as
+      <select id="role">
+        <option value="customer">Customer</option>
+        <option value="employee">Employee</option>
+        <option value="manager" selected>Manager</option>
+      </select>
+    </label>
+  </header>
+
+  <nav class="nav" id="nav">
+    <button data-view="shop" data-roles="customer employee manager">Shop</button>
+    <button data-view="cart" data-roles="customer employee manager">Cart <span class="badge" id="cart-badge">0</span></button>
+    <button data-view="orders" data-roles="employee manager">Orders</button>
+    <button data-view="customers" data-roles="employee manager">Customers</button>
+    <button data-view="inventory" data-roles="employee manager">Inventory</button>
+    <button data-view="purchases" data-roles="employee manager">Purchases</button>
+    <button data-view="products" data-roles="manager">Products</button>
+    <button data-view="categories" data-roles="manager">Categories</button>
+    <button data-view="suppliers" data-roles="manager">Suppliers</button>
+    <button data-view="employees" data-roles="manager">Employees</button>
+    <button data-view="reports" data-roles="manager">Reports</button>
+  </nav>
+
+  <main>
+    <!-- SHOP -->
+    <section class="view" id="view-shop">
+      <h1>Shop</h1>
+      <div class="filters">
+        <input id="shop-q" type="search" placeholder="Search plants, pots, tools..." aria-label="Search products">
+        <select id="shop-cat" aria-label="Category"><option value="">All categories</option></select>
+        <input id="shop-min" type="number" min="0" step="0.01" placeholder="Min $" aria-label="Minimum price">
+        <input id="shop-max" type="number" min="0" step="0.01" placeholder="Max $" aria-label="Maximum price">
+        <label class="check"><input id="shop-instock" type="checkbox"> In stock only</label>
+        <select id="shop-sort" aria-label="Sort">
+          <option value="name_asc">Name A-Z</option>
+          <option value="name_desc">Name Z-A</option>
+          <option value="price_asc">Price: low to high</option>
+          <option value="price_desc">Price: high to low</option>
+          <option value="stock_desc">Most in stock</option>
+        </select>
+      </div>
+      <p class="muted" id="shop-count"></p>
+      <div class="grid" id="shop-grid"></div>
+    </section>
+
+    <!-- CART -->
+    <section class="view" id="view-cart">
+      <h1>Cart &amp; Checkout</h1>
+      <div class="two-col">
+        <div>
+          <div class="card" id="cart-lines"></div>
+        </div>
+        <div class="card checkout">
+          <h2>Checkout</h2>
+          <label>Customer
+            <select id="cart-customer"></select>
+          </label>
+          <button class="btn small ghost" id="cart-new-customer" type="button">+ New customer</button>
+          <label>Processed by
+            <select id="cart-employee"></select>
+          </label>
+          <div class="total-row"><span>Order total</span><strong id="cart-total">$0.00</strong></div>
+          <div class="alert error hidden" id="cart-error" role="alert"></div>
+          <button class="btn primary" id="cart-place" type="button">Place order</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="view" id="view-orders">
+      <h1>Orders</h1>
+      <div class="filters">
+        <select id="ord-status" aria-label="Status">
+          <option value="">All statuses</option>
+          <option>Pending</option><option>Processing</option><option>Completed</option><option>Cancelled</option>
+        </select>
+        <label class="inline">From <input id="ord-from" type="date"></label>
+        <label class="inline">To <input id="ord-to" type="date"></label>
+        <select id="ord-customer" aria-label="Customer"><option value="">All customers</option></select>
+        <button class="btn ghost small" id="ord-clear" type="button">Clear</button>
+      </div>
+      <div class="card table-wrap" id="ord-table"></div>
+    </section>
+
+    <!-- PRODUCTS (admin) -->
+    <section class="view" id="view-products">
+      <h1>Products</h1>
+      <div class="filters">
+        <input id="prod-q" type="search" placeholder="Search name, SKU, description" aria-label="Search products">
+        <select id="prod-cat" aria-label="Category"><option value="">All categories</option></select>
+        <label class="check"><input id="prod-low" type="checkbox"> Low stock only</label>
+        <span class="spacer"></span>
+        <button class="btn primary" id="prod-add" type="button">+ New product</button>
+      </div>
+      <div class="card table-wrap" id="prod-table"></div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section class="view" id="view-customers">
+      <h1>Customers</h1>
+      <div class="filters">
+        <input id="cus-q" type="search" placeholder="Search by name or email" aria-label="Search customers">
+        <span class="spacer"></span>
+        <button class="btn primary" id="cus-add" type="button">+ New customer</button>
+      </div>
+      <div class="card table-wrap" id="cus-table"></div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="view" id="view-categories">
+      <h1>Categories</h1>
+      <div class="filters">
+        <input id="cat-q" type="search" placeholder="Search categories" aria-label="Search categories">
+        <span class="spacer"></span>
+        <button class="btn primary" id="cat-add" type="button">+ New category</button>
+      </div>
+      <div class="card table-wrap" id="cat-table"></div>
+    </section>
+
+    <!-- SUPPLIERS -->
+    <section class="view" id="view-suppliers">
+      <h1>Suppliers</h1>
+      <div class="filters">
+        <input id="sup-q" type="search" placeholder="Search suppliers" aria-label="Search suppliers">
+        <span class="spacer"></span>
+        <button class="btn primary" id="sup-add" type="button">+ New supplier</button>
+      </div>
+      <div class="card table-wrap" id="sup-table"></div>
+    </section>
+
+    <!-- EMPLOYEES -->
+    <section class="view" id="view-employees">
+      <h1>Employees</h1>
+      <div class="filters">
+        <input id="emp-q" type="search" placeholder="Search employees" aria-label="Search employees">
+        <span class="spacer"></span>
+        <button class="btn primary" id="emp-add" type="button">+ New employee</button>
+      </div>
+      <div class="card table-wrap" id="emp-table"></div>
+    </section>
+
+    <!-- PURCHASES -->
+    <section class="view" id="view-purchases">
+      <h1>Supplier Purchases</h1>
+      <div class="filters">
+        <select id="pur-status" aria-label="Status">
+          <option value="">All statuses</option>
+          <option>Ordered</option><option>Received</option><option>Cancelled</option>
+        </select>
+        <select id="pur-supplier" aria-label="Supplier"><option value="">All suppliers</option></select>
+        <span class="spacer"></span>
+        <button class="btn primary" id="pur-add" type="button">+ New purchase</button>
+      </div>
+      <div class="card table-wrap" id="pur-table"></div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="view" id="view-inventory">
+      <h1>Inventory</h1>
+      <div class="stats" id="inv-summary"></div>
+      <div class="filters">
+        <input id="inv-q" type="search" placeholder="Search name or SKU" aria-label="Search inventory">
+        <select id="inv-cat" aria-label="Category"><option value="">All categories</option></select>
+        <label class="check"><input id="inv-low" type="checkbox"> Low stock only</label>
+      </div>
+      <div class="card table-wrap" id="inv-table"></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="view" id="view-reports">
+      <h1>Management Reports</h1>
+      <div id="rep-list"></div>
+    </section>
+  </main>
+
+  <dialog id="modal"><div class="modal-inner">
+    <header><h2 id="modal-title"></h2><button class="icon-btn" id="modal-close" aria-label="Close" type="button">&times;</button></header>
+    <div id="modal-body"></div>
+  </div></dialog>
+  <div id="toasts" aria-live="polite"></div>
+
+  <script src="Resources/scripts/index.js"></script>
+</body>
+</html>
